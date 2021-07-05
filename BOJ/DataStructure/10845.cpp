@@ -59,13 +59,13 @@ int main(){
         }else if(cmd=="empty"){
             cout << q.empty() << '\n';
         }else if(cmd=="front"){
-            if(!q.empty()){
+            if(q.empty()){
                 cout << -1 << '\n';
             }else{
                 cout << q.front() << '\n';
             }
         }else if(cmd=="back"){
-            if(!q.empty()){
+            if(q.empty()){
                 cout << -1 << '\n';
             }else{
                 cout << q.back() << '\n';
