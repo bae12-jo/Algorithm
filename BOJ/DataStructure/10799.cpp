@@ -15,10 +15,18 @@ int main(){
     int ans = 0;
 
     for(int i=0; i<n; i++){
-        if(a[i]=='('){
+        if(str[i]=='('){
             s.push(i);
+        }else{
+            if (s.top()+1 == i){
+                s.pop();
+                ans += s.size();
+            }else{
+                s.pop();
+                ans += 1;
+            }
         }
     }
-    
+    cout << ans << '\n';
     return 0;
 }
