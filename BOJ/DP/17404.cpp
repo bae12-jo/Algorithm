@@ -3,6 +3,7 @@
 using namespace std;
 int a[1001][3];
 int d[1001][3];
+
 int main() {
     ios_base::sync_with_stdio(false);
     int n;
