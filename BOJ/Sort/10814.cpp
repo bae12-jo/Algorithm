@@ -1,7 +1,6 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <utility>
 
 using namespace std;
 
@@ -12,7 +11,7 @@ struct Person{
 };
 
 bool compare(Person a, Person b){
-    if (a.name == b.name)
+    if (a.age == b.age)
         return a.join_date < b.join_date;
     return a.age < b.age;
 }
