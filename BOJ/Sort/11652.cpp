@@ -19,13 +19,13 @@ int main()
 		{
 			cnt++;
 			if (cnt > max)
-			{
+			{	
 				max = cnt;
 				index = i;
 			}
 		}
 		else
-			//0이아닌 1로초기화!
+			//0이 아닌 1로초기화!
 			cnt = 1;
 	}
 	cout << card[index] << '\n';
