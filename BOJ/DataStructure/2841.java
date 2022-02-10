@@ -7,7 +7,6 @@ import java.util.StringTokenizer;
 public class BOJ_2841 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
-	static StringBuilder sb = new StringBuilder();
 	
 	static class guitar{
 		int line;
