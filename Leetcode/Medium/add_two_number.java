@@ -16,7 +16,7 @@ class Solution {
         ListNode curr = head;
         int carry = 0;
         
-        while(l1 != null && l2 != null){
+        while(l1 != null || l2 != null){
             int x = (l1 != null)? l1.val : 0;
             int y = (l2 != null)? l2.val : 0;
             
