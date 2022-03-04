@@ -13,30 +13,31 @@ Q. prioirityqueue를 정수형 배열로 만드는 것과, node로 만드는 것
 - 위와 비슷한 관점, 다만 여기서는 배열이라고 더 공간이 낭비되는 것은 아님
 */
 
-public class Dijkstra{
+public class Dijkstra_allnode{
 	
 	static int n, e; // node개수, edge 개수
 	static int[][] graph; // graph의 모든 간선
 	static int[] dist; // 최단 거리
 	
 	
-	static void dijkstra(int src){
+	static void dijkstra_dist(int src){
 		// int값 2개를 쌍으로 넣어줘야 함
 		// 두 값의 첫번재 인덱스로 비교하는 람다함수, a는 최단 거리를 b에는 정점의 번호를
 		PriorityQueue<int[]> pq = new PriorityQueue<>((a, b)->a[0]-b[0]);
-		boolean[] visited = new boolean[n+1];
-		for(int i=0; i<n; ++) dist[i] = Integer.MAX_VALUE;
+		boolean[] visited = new boolean[n];
+		dist = new int[n];
+		for(int i=0; i<n; i++) dist[i] = Integer.MAX_VALUE;
 		dist[src] = 0; // 주어진 위치는 0으로 초기화 (자기 자신으로 가는데 0이 걸리므로)
 		pq.add(new int[] {0, src});
 		
 		while(!pq.isEmpty()){
-			int[] crr = pq.poll(); // 최단거리가 더 작은 배열이 dequeue됨
+			int[] curr = pq.poll(); // 최단거리가 더 작은 배열이 dequeue됨
 			int u = curr[1]; // 1번 인덱스에 있는 정점의 번호를 꺼냄
 			if(visited[u]) continue; // 방문한 노드라면 건너뜀, 시작 노드가 같은 값이 큐에 여러개 있을 수 있음
 			
 			visited[u] = true; // 시작 노드 방문 표시
-			for(int v=0; v<n; ++v){ // u로부터 다른 노드로 탐색
-				if(dist[v]>dist[u] + graph[u][v]){ // 방문하지 않은 dist는 무한대값
+			for(int v=0; v<n; v++){ // u로부터 다른 노드로 탐색
+				if(dist[v]>dist[u] + graph[u][v] && (dist[u]+graph[u][v])>=0){ // [오버플로우 방지 필수] 방문하지 않은 dist는 무한대값
 					dist[v] = dist[u]+graph[u][v]; // 더 작은 값 업데이트
 					pq.add(new int[] {dist[v], v});
 				}
@@ -47,8 +48,10 @@ public class Dijkstra{
 	public static void main(String[] args){
 	
 		Scanner sc = new Scanner(System.in);
-		n = sc.nextInt():
-		e = sc.nextInt():
+		n = sc.nextInt();
+		e = sc.nextInt();
+		
+		graph = new int[n][n];
 		
 		// graph 초기화		
 		for(int i=0; i<n; i++){
@@ -60,18 +63,18 @@ public class Dijkstra{
 		
 		// graph에 간선 채우기
 		for(int i=0; i<e; i++){
-			int u = sc.nextInt():
-			int v = sc.nextInt():
-			int cost = sc.nextInt():
+			int u = sc.nextInt();
+			int v = sc.nextInt();
+			int cost = sc.nextInt();
 			graph[u][v] = graph[v][u] = cost;
 		}
 		
 		// 최단 경로 구하기
-		dijkstra(0);
+		dijkstra_dist(0);
 		
 		// 결과 출력
 		for(int i=0; i<n; i++){
-			Sysetm.out.print(dist[0]+" ");
+			System.out.print(dist[i]+" ");
 		}
 	
 	}
