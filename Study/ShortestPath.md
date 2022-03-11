@@ -25,7 +25,7 @@ negative cycle이란? 사이클의 총합이 음수가 되는 것, 무한히 돌
 * 이처럼 어떤 문제의 최적해가 부분문제들의 최적해로 구성된다면 해당 문제는 optimal substrcture를 가지므로 DP나 Greedy 기법으로 해결할 수 있다.
 * 최단 경로는 사이클을 포함하지 않는다. (음수 사이클이 없다는 가정 하에서)
 
-## Edge Relaxtion
+## Edge Relaxation
 * 변 경감 연산은 최단 경로를 구하는 과정에서 경로를 구성하고 있는 엣지 가중치의 합을 줄여나간다.
 * 최단 경로 알고리즘은 모든 edge에 대해서 relaxation을 기본 연산으로 사용하며 다만 알고리즘별로 relaxation 연산을 어떤 순서로 하느냐 차이가 있다.
 * 기존에 알고 있던 경로보다 더 나은 경로를 알게 되어 갱신하는 과정이다.
@@ -149,8 +149,9 @@ public class Bellman-ford {
 				int next = e[j].v;
 				int cost = e[j].val;
 						
-				if(dist[e[j].u] == INF) 
-					continue;
+				// 도달 불가능한 정점이 음수가중치일 경우 계산이 이상해지므로 도달 불가능한 곳은 건너뛰기
+				if(dist[e[j].u] == INF) continue;
+				
 				// 현재 간선을 거쳐서 다른 노드로 이동하는 거리가 짧은 경우 
 				if(dist[next] > (dist[cur] + cost)) {
 					dist[next] = dist[cur] + cost;
