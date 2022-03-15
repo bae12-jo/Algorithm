@@ -1,115 +1,59 @@
-import java.io.BufferedReader;
+import java.util.*;
+import java.io.*;
 
-import java.io.InputStreamReader;
+class BOJ_9663{
 
-import java.io.IOException;
+	static BufferedReader br;
+	static BufferedWriter bw;
+	static StringTokenizer st;
+	static StringBuilder sb;
 
- 
-
-public class Main {
-
- 
-
-	public static int[] arr;
-
-	public static int N;
-
-	public static int count = 0;
-
- 
-
-	public static void main(String[] args) throws IOException {
-
- 
-
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-		N = Integer.parseInt(br.readLine());
-
-		arr = new int[N];
-
- 
-
-		nQueen(0);
-
-		System.out.println(count);
-
- 
-
-	}
-
- 
-
-	public static void nQueen(int depth) {
-
-		// 모든 원소를 다 채운 상태면 count 증가 및 return 
-
-		if (depth == N) {
-
-			count++;
-
-			return;
-
-		}
-
- 
-
-		for (int i = 0; i < N; i++) {
-
-			arr[depth] = i;
-
-			// 놓을 수 있는 위치일 경우 재귀호출
-
-			if (Possibility(depth)) {
-
-				nQueen(depth + 1);
-
-			}
-
-		}
-
- 
-
-	}
-
- 
-
-	public static boolean Possibility(int col) {
-
- 
-
-		for (int i = 0; i < col; i++) {
-
-			// 해당 열의 행과 i열의 행이 일치할경우 (같은 행에 존재할 경우) 
-
-			if (arr[col] == arr[i]) {
-
+	static int[] arr;
+	static int N;
+	static int count = 0;
+	
+	public static boolean Possibility(int col){
+		for(int i=0; i<col; ++i){
+			//System.out.println("?? : " +col+" "+i);
+			if(arr[col]==arr[i]){ // 같은 행에 존재하는 경우
+				//System.out.println("같은 행 : " +arr[col]+" "+arr[i]);
 				return false;
-
-			} 
-
-			
-
-			/*
-
-			 * 대각선상에 놓여있는 경우
-
-			 * (열의 차와 행의 차가 같을 경우가 대각선에 놓여있는 경우다)
-
-			 */
-
-			else if (Math.abs(col - i) == Math.abs(arr[col] - arr[i])) {
-
-				return false;
-
 			}
-
+			else if(Math.abs(col - i) == Math.abs(arr[col]-arr[i])){ // 대각선에 놓이는 경우 (열의 차와 행의 차가 같은 경우)
+				//System.out.println("대각선 : " +arr[col]+" "+arr[i]);
+				return false;
+			}
 		}
-
-		
-
 		return true;
-
 	}
-
+	
+	public static void nQueen(int depth){
+		if(depth==N){ // 행을 다 채우면 카운트 증가 시키고 종료
+			count++;
+			return;
+		}
+		
+		for(int i=0; i<N; ++i){
+			arr[depth] = i;
+			if(Possibility(depth)){ //해당 열의 i번째 행에 놓을 수 있는지 검사하는 함수
+				//System.out.println("possible!");
+				nQueen(depth+1);
+			}
+		}
+	}
+	
+	public static void main(String[] args) throws IOException{
+		
+		br = new BufferedReader(new InputStreamReader(System.in));
+		N = Integer.parseInt(br.readLine());
+		
+		arr = new int[N];
+		nQueen(0);
+		
+		bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		bw.write(String.valueOf(count));
+		bw.flush();
+		bw.close();
+	
+	}
 }
