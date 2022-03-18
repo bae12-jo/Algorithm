@@ -1,4 +1,6 @@
-// 유사한 문제 http://www.jungol.co.kr/bbs/board.php?bo_table=pbank&wr_id=1685
+// 유사한 문제 
+// (1) http://www.jungol.co.kr/bbs/board.php?bo_table=pbank&wr_id=1685
+// (2) https://www.acmicpc.net/problem/2874
 
 // 2차원 누적합 채워두고 (x, y) 경계값을 기준으로 a, b, c, d 영역의 k 사이즈 정사각형의 최대값 2개를 고르고 전체의 최대값을 반환
 
