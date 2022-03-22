@@ -11,18 +11,14 @@
 class Solution {
     public ListNode reverseList(ListNode head) {
         
-        // edge case covering
+        // Edge case covering
         if(head==null) return null;
         
-        ListNode tmp, pre = null, curr = head;
+        ListNode pre = null, curr = head;
         
-        tmp = curr.next;
-        curr.next = null;
-        pre = curr;
-        curr = tmp;
-        
+        // end loop when it reach null
         while(curr!=null){
-            tmp = curr.next;
+            ListNode tmp = curr.next;
             curr.next = pre;
             pre = curr;
             curr = tmp;
