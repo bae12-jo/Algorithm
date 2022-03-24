@@ -7,11 +7,11 @@
 * 최소 스패닝 트리에서는 정점 간 사이클이 존재하면 안 된다.
 * 최소 스패닝 트리를 구현하는 대표적인 알고리즘은 `크루스칼`과 `프림`이다.
 
-## Kruskal와 Trim 비교
-| Algoritm | Kruskal | Trim |
+## Kruskal와 Prim 비교
+| Algoritm | Kruskal | Prim |
 |:---:|:---:|:---:|
 | Focus on | Edge | Node |
-| Concept | Greedy | |
+| Concept | Greedy | Greedy |
 | Used Structure | PriorityQueue<Edge>, Union-Find, parent[N] | PriorityQueue<Edge>, List<Edge>, boolean visited[n+1] |
 | Usages | Sparse Graph | Dense Graph |
   
