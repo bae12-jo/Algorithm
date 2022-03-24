@@ -14,10 +14,12 @@
 | Concept | Greedy | Greedy |
 | Used Structure | PriorityQueue<Edge>, Union-Find, parent[N] | PriorityQueue<Edge>, List<Edge>, boolean visited[n+1] |
 | Usages | Sparse Graph | Dense Graph |
+
+![image](https://user-images.githubusercontent.com/84948636/159829397-07558097-1e27-4ea8-98be-d6003aab45a7.png)
   
 - 크루스칼은 그래프 내 간선의 수가 적은 '희소 그래프'에 적합하다.
 - 프림은 그래프 내 간선의 수가 많은 '밀집 그래프'에 적합하다.
-- 백준 1922번 문제를 기준으로 크루스칼이 좀 더 빨랐음.
+- 백준 1922번 문제 포함 PS 문제에서는 대체로 크루스칼이 좀 더 빠르다.
 
 # Kruskal
 
