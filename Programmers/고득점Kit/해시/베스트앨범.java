@@ -1,3 +1,91 @@
+/* entrySet을 이용한 해시맵 정렬 */
+import java.util.*;
+
+class Solution {
+    
+    static class Genre implements Comparable<Genre>{
+        
+        String name;
+        int count;
+        
+        Genre(String name, int count){
+            this.name = name;
+            this.count = count;
+        }
+        
+        @Override
+        public int compareTo(Genre g){
+            return g.count - this.count;
+        }
+    }
+    
+    List<Integer> result = new ArrayList<>();
+    // Set <name of genre, total play time>
+    HashMap<String, Integer> playCounts = new HashMap<>();
+    // Sort genre based on total play time
+    PriorityQueue<Genre> genreOrder = new PriorityQueue<Genre>();
+    // Set <name of genre, information of genre>
+    HashMap<String, Object> playList = new HashMap<>();
+    
+    public int[] solution(String[] genres, int[] plays) {
+        
+        // Set <number of music, play time>
+        HashMap<Integer, Integer> info;
+        
+        for(int i=0; i<genres.length; ++i){
+            
+            // Update total play time of each genres
+            playCounts.put(genres[i], playCounts.getOrDefault(genres[i], 0)+plays[i]);
+            
+            // Store information of each music
+            if(playList.containsKey(genres[i])){
+                info = (HashMap<Integer, Integer>)playList.get(genres[i]);
+            }else{
+                info = new HashMap<Integer, Integer>();
+            }
+            info.put(i, plays[i]);
+            playList.put(genres[i], info);
+            
+        }
+        
+        for(String s: playCounts.keySet()){
+            genreOrder.offer(new Genre(s, playCounts.get(s)));
+        }
+        
+        while(!genreOrder.isEmpty()){
+            Genre g = genreOrder.poll();
+            String key = g.name;
+            
+            playList.get(key);
+            info = (HashMap<Integer, Integer>)playList.get(key);
+            List<Map.Entry<Integer, Integer>> entryList = new LinkedList<>(info.entrySet());
+            entryList.sort(new Comparator<Map.Entry<Integer, Integer>>(){
+                @Override
+                public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2){
+                    return o2.getValue() - o1.getValue();
+                }
+            });
+            
+            int count = 0;
+            for(Map.Entry<Integer, Integer> entry : entryList){
+                if(count==2) break;
+                result.add(entry.getKey());
+                count++;
+            }            
+        }
+        
+        int[] answer = new int[result.size()];
+        
+        for(int i=0; i<result.size(); ++i){
+            answer[i] = result.get(i);
+        }        
+        
+        return answer;
+    }
+}
+
+/* 정렬 결과 조회에 iterator 사용 */
+
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Comparator;
