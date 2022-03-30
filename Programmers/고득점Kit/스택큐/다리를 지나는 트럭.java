@@ -1,3 +1,5 @@
+// 시간 중심으로 짠 코드, 다리에 하나 밖에 올릴 수 없을 때는 0을 큐에 넣음
+
 import java.util.*;
 
 class Solution {
@@ -31,3 +33,64 @@ class Solution {
         return answer+bridge_length;
     }
 }
+
+// 객체 지향적으로 짠 코드
+
+import java.util.*;
+
+class Solution {
+    class Truck {
+        int weight;
+        int move;
+
+        public Truck(int weight) {
+            this.weight = weight;
+            this.move = 1;
+        }
+
+        public void moving() {
+            move++;
+        }
+    }
+
+    public int solution(int bridgeLength, int weight, int[] truckWeights) {
+        Queue<Truck> waitQ = new LinkedList<>();
+        Queue<Truck> moveQ = new LinkedList<>();
+
+        for (int t : truckWeights) {
+            waitQ.offer(new Truck(t));
+        }
+
+        int answer = 0;
+        int curWeight = 0;
+
+        while (!waitQ.isEmpty() || !moveQ.isEmpty()) {
+            answer++;
+
+            if (moveQ.isEmpty()) {
+                Truck t = waitQ.poll();
+                curWeight += t.weight;
+                moveQ.offer(t);
+                continue;
+            }
+
+            for (Truck t : moveQ) {
+                t.moving();
+            }
+
+            if (moveQ.peek().move > bridgeLength) {
+                Truck t = moveQ.poll();
+                curWeight -= t.weight;
+            }
+
+            if (!waitQ.isEmpty() && curWeight + waitQ.peek().weight <= weight) {
+                Truck t = waitQ.poll();
+                curWeight += t.weight;
+                moveQ.offer(t);
+            }
+        }
+
+        return answer;
+    }
+}
+
