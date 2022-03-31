@@ -7,8 +7,8 @@
 
 |알고리즘|다익스트라|벨만포드|플로이드-와샬|
 |:---:|:---:|:---:|:---:|
-|음수 가중치|비허용|허용||
-|negative cycle|비허용|비허용||
+|음수 가중치|비허용|허용|허용|
+|negative cycle|비허용|비허용|비허용|
 |strategy|greedy|greedy|dp|
 |usage|one to all|one to all|all to all|
 
@@ -277,3 +277,109 @@ class dijkstra_example{
 # II-1. Floyd-warshall
 * DP를 이용하는 대표적인 알고리즘
 * 모든 노드가 1에서 n사이라는 것이 중요 G=(V,E), V={1,2,...,n}
+
+![image](https://user-images.githubusercontent.com/84948636/161025095-cdcbf01e-1cfa-4c60-8a8a-a49102b93b96.png)
+* 중간에 노드집합 {1, 2, ..., k}에 속한 노드들만 거쳐서 노드 i에서 j까지 가는 최단 경로의 길이
+
+![image](https://user-images.githubusercontent.com/84948636/161025306-83c87a06-b0c8-49ca-b589-cfb832ee763a.png)
+* k가 0이면 공집합이라는 뜻, i와 j 사이 간선이 존재한다면 유일한 경로가 될 것이며 없으면 경로가 존재하지 않음(무한대)
+* k가 n이라면 어떤 간선도 지날 수 있다는 뜻이므로, 여기서 구해진 경로가 최단 경로가 됨 -> 모든 노드쌍 i, j에 대해서 델타(i, j)를 구하는 것이 이 알고리즘의 목표
+
+![image](https://user-images.githubusercontent.com/84948636/161026024-70575461-0cf2-4020-9d98-dd9e82ebb220.png)
+* 1부터 K 사이의 정점을 지나 i부터 j까지 가는 간선을 구하기 위해서는 1부터 k-1까지의 간선을 이용해야 함 (DP)
+
+![image](https://user-images.githubusercontent.com/84948636/161026665-66cf4be5-38fa-43bf-a5c6-1f22ced2142c.png)
+* d^k[i.j]를 3차원으로 구현
+![image](https://user-images.githubusercontent.com/84948636/161032575-231f1a76-7f6c-4b5b-8dfb-f27613145c01.png)
+* d[i, j]를 2차원으로 구현, k가 갱신될 때마다 더 작은 값으로 덮어씌우기 (누적합)
+* d^k[i, k]와 d^k-1[i, k]는 동일하기 때문
+
+![image](https://user-images.githubusercontent.com/84948636/161037383-a383e328-eb9c-42a4-8c15-2510009a82cb.png)
+
+```java
+// https://sskl660.tistory.com/61
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+/*
+sample input(첫 번째 숫자는 노드의 개수, 두 번째 숫자는 간선의 개수 이다).
+5
+8
+0 1 5
+0 4 1
+0 2 7
+0 3 2
+1 2 3
+1 3 6
+2 3 10
+3 4 4
+ */
+public class FloydWarshall {
+	static int N, M;
+	static int[][] dist;
+	static int INF = Integer.MAX_VALUE;
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		
+		// 초기화
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		N = Integer.parseInt(br.readLine());
+		M = Integer.parseInt(br.readLine());
+		
+		// 플로이드 초기 거리 테이블 초기화
+		dist = new int[N][N];
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				// 자기 자신으로 가는 길은 최소 비용이 0이다.
+				if (i == j) {
+					dist[i][j] = 0;
+					continue;
+				}
+				// 자기 자신으로 가는 경우를 제외하고는 매우 큰 값(N개의 노드를 모두 거쳐서 가더라도 더 큰 값).
+				dist[i][j] = INF;
+			}
+		}
+
+		for (int i = 0; i < M; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			int cost = Integer.parseInt(st.nextToken());
+
+			// 가는 경로가 하나가 아닐 수 있다. 따라서 그 중 최소 비용을 저장해두면 된다. (유방향 그래프인 경우 더 작은 경로 저장)
+			dist[a][b] = Math.min(dist[a][b], cost);
+			// dist[b][a] = Math.min(dist[b][a], cost);
+		}
+
+		// 플로이드 워셜 알고리즘
+		// 노드를 1개부터 N개까지 거쳐가는 경우를 모두 고려한다.
+		for (int k = 0; k < N; k++) {
+			// 노드 i에서 j로 가는 경우.
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j < N; j++) {
+					// k번째 노드를 거쳐가는 비용이 기존 비용보다 더 작은 경우 갱신
+					// 또는 연결이 안되어있던 경우(INF) 연결 비용 갱신.
+					if(dist[i][k]!=INF && dist[k][j]!=INF) dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+				}
+			}
+		}
+
+		// 출력
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				// 연결이 안되어 있는 경우
+				if (dist[i][j] == INF) {
+					System.out.print("INF ");
+				} else {
+					System.out.print(dist[i][j] + " ");
+				}
+			}
+			System.out.println();
+		}
+	}
+}
+```
+
