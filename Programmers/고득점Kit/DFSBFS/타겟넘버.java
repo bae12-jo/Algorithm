@@ -1,3 +1,6 @@
+// 문제 조건
+// (1) 원소 n개에 대해 + 혹은 - 으로 갈라지는 경우의 수 존재
+
 class Solution {
     
     int answer = 0;
