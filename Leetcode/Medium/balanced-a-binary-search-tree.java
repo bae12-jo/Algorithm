@@ -42,3 +42,51 @@ class Solution {
         return root;
     }
 }
+
+
+// 가장 빠른 코드인데.. Morris Traversal인가? 이해 안됨 ㅎㅎ..
+
+class Solution {
+    
+    TreeNode head = null;
+    TreeNode curr = null;
+    int ttl = 0;
+    public TreeNode balanceBST(TreeNode root) {
+        inorder(root);
+        curr = head;
+        return construct(0, ttl - 1);
+    }
+    
+    private void inorder(TreeNode node){
+        
+        if (node == null){
+            return;
+        }
+        
+        inorder(node.left);
+        ttl++;
+        if(head == null){
+            head = node;
+        }
+        else{
+            curr.right = node;
+        }
+        curr = node;
+        inorder(node.right);
+    }
+    
+    private TreeNode construct(int l, int r){
+        
+        if (l > r){
+            return null;
+        }
+        int m = l + (r - l) / 2;
+        TreeNode left = construct(l, m - 1);
+        TreeNode node = curr;
+        curr = curr.right;
+        TreeNode right = construct(m + 1, r);
+        node.left = left;
+        node.right = right;
+        return node;
+    }
+}
