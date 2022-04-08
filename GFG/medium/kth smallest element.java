@@ -1,6 +1,8 @@
+import java.util.*;
+
 //User function Template for Java
 
-class Solution{
+class QuickSelectWithMOM{
     public static int kthSmallest(int[] arr, int l, int r, int k) 
     {   
         // If k is smaller than 
@@ -15,7 +17,7 @@ class Solution{
         int i;
         
          // There will be floor((n+4)/5) groups;
-        int []median = new int[(n + 4) / 5];
+        int []median = new int[(n + 4) / 5]; // 올림 효과, 나머지가 생기지 않도록 방지
         for (i = 0; i < n/5; i++)
             median[i] = findMedian(arr, l+i*5, l+i*5+5);
             
@@ -93,5 +95,18 @@ class Solution{
             Arrays.sort(arr, i, n);
             return arr[i+(n-i)/2];                    // sort the array and return middle element
     }
+	
+	public static void main(String[] args){
+		
+		int[] arr = {7, 10, 4, 3, 20, 15};
+		int k = 3;
+		
+		// 메소드를 바로 사용할거면 전부 public static으로 선언해줘야 한다
+		// 접근자를 public으로 하지 않으면 인스턴스를 생성해서 사용해야 한다.
+		// kthSmallest = ob = new kthSmallest();
+		// ob.kthSmallest(arr, 0, n-1, k); // main과 다른 클래스에 선언된 경우
+		System.out.print(kthSmallest(arr, 0, arr.length-1, k));
+	
+	}
     
 }
