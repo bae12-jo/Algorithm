@@ -1,4 +1,27 @@
 // DP
+// 한번 초기화하고 트랜잭션 수만큼 바깥 for문 돌기
+class Solution {
+    
+    public int maxProfit(int k, int[] prices) {
+        if (prices.length == 0) return 0;
+        int n = prices.length;
+        int[] with = new int[n];
+        int[] without = new int[n];
+        for (int z = 0; z < k; z++) {
+            with[0] = -prices[0];
+            for (int i = 1; i < n; i++) {
+                with[i] = Math.max(with[i - 1], without[i] - prices[i]);
+                without[i] = Math.max(without[i - 1], with[i - 1] + prices[i]);
+            }
+        }
+        return Math.max(with[n - 1], without[n - 1]);
+    }
+    
+}
+
+
+// DP
+// dp[][][] 배열 -- 길이, 트랜잭션 수, 매수매도 상태
 
 class Solution {
     public int maxProfit(int k, int[] prices) {
