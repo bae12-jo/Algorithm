@@ -27,7 +27,7 @@ class Solution {
                 // get start time of new log
                 long startTime = (long)(endTime.getTime()-processSec*1000+1);
                 
-                if(prevEndTime+1000>startTime){
+                if(prevEndTime+1000>startTime){ // 이전 로그의 종료시간에서 1초 미만을 지나는 시점에 시작되는 로그 개수 세기 (자기자신 포함)
                     count++;
                     answer = Math.max(answer, count);
                 }               
