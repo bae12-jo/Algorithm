@@ -79,6 +79,7 @@ class Trie {
     public boolean search(String word) {
         
         TrieNode node = searchPrefix(word);
+        if(node==null) return false;
         return node!=null & node.isEnd();
         
     }
