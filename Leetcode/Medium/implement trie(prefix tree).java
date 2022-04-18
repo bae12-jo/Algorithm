@@ -12,36 +12,78 @@ class Trie {
             links = new TrieNode[R];
         }
         
-        public boolean containKeys(char c){
+        public boolean containsKey(char ch){
             return links[ch-'a']!=null;
         }
         
-        pubilc TrieNode get(char c){
+        public TrieNode get(char ch){
             return links[ch-'a'];
         }
         
         public void put(char ch, TrieNode node){
-            linkes[ch-'a'] = node;
+            links[ch-'a'] = node;
         }
         
+        public void setEnd(){
+            isEnd = true;
+        }
         
+        public boolean isEnd(){
+            return isEnd;
+        }        
     
     }
-
+    
+    
+    private TrieNode root;
+    
     public Trie() {
+    
+        root = new TrieNode();
         
     }
     
+    // inserts a word into the trie
     public void insert(String word) {
         
+        TrieNode node = root;
+        
+        for(int i=0; i<word.length(); ++i){
+            char currChar = word.charAt(i);
+            if(!node.containsKey(currChar)){
+                node.put(currChar, new TrieNode());
+            }
+            node = node.get(currChar);
+        }
+        node.setEnd();
     }
     
+    // search a prefix or whole key in trie and returns the node where search ends
+    private TrieNode searchPrefix(String word){
+        TrieNode node = root;
+        
+        for(int i=0; i<word.length(); ++i){
+            char currKey = word.charAt(i);
+            if(node.containsKey(currKey)){
+                node = node.get(currKey);
+            }else{
+                return null;
+            }
+        }
+        return node;
+    }
+    
+    // return if there is any word in the trie that starts with the given prefix
     public boolean search(String word) {
+        
+        TrieNode node = searchPrefix(word);
+        return node!=null & node.isEnd();
         
     }
     
     public boolean startsWith(String prefix) {
-        
+        TrieNode node = searchPrefix(prefix);
+        return node!=null;
     }
 }
 
