@@ -76,4 +76,16 @@ public class Solution {
 Divide each elements at very beginning, and conquer it recursively
 
 
+## Master Theorem
+
+Master Theorem, also known as Master Method, provides asymptotic analysis (i.e. the time complexity) for many of the recursion algorithms that follow the pattern of divide-and-conquer. 
+
+Note that Master Theorem is an advanced technique to estimate the time complexity of certain recursive algorithms. It does not apply to all recursion algorithms. Certainly, one is not expected to memorize by heart all the formulas involved in Master Theorem during the interviews.
+
+한국어 설명 https://johngrib.github.io/wiki/master-theorem/
+
+> T(n)=aT(n/b)+f(n)
+
+a와 b가 양의 상수일 때 문제 크기 n을 크기가 각가 n/b인 a개의 하위 문제로 나누는 알고리즘의 수행 시간을 나타낸다. a개의 하위 문제는 각각 T(n/b) 시간에 재귀적으로 풀린다. 문제를 나누고 하위 문제들의 결과를 합치는 데 드는 비용은 함수 f(n)으로 나타낸다.
+
 
