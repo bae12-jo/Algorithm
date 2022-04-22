@@ -1,4 +1,4 @@
-// O(nm)
+// O(n)
 
 class SparseVector {
     private int[] array;
@@ -24,7 +24,7 @@ class SparseVector {
 // SparseVector v2 = new SparseVector(nums2);
 // int ans = v1.dotProduct(v2);
 
-// O(nm) with less memory
+// O(n) with less memory
 
 class SparseVector {
     
