@@ -11,16 +11,6 @@ public class 마법사상어와파이어스톰 {
 	static int[][] D = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}}; // 상 우 하 좌
 	static StringTokenizer st;
 	
-	private static int sum() {
-		int sum = 0;
-		for(int i=0; i<N; i++) {
-			for(int j=0; j<N; j++) {
-				if(map[i][j]>0) sum += map[i][j];
-			}
-		}
-		return sum;
-	}
-	
 	private static void rotate(int row, int col, int length, int[][] newMap) { // 시계 방향 90도 회전
 		
 		for(int r=0; r<length; r++) {
