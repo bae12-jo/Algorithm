@@ -35,3 +35,25 @@ class Solution {
     }
     
 }
+
+/* Bottom-up */
+
+class Solution {
+    public int maximumScore(int[] nums, int[] multipliers) {
+        
+        int N = nums.length, M = multipliers.length;
+        int[][] cache = new int[M+1][M+1]; // M 인덱스의 값이 0이 되도록 하기 위해 (out of bound 방지)
+        
+        // base case가 iteration의 처음이 되어야함!
+        for(int total=M-1; total>=0; total--){
+            for(int left=total; left>=0; left--){
+                int mult = multipliers[total];
+                int right = N-1-(total-left);
+                cache[total][left] = Math.max(nums[left]*mult+cache[total+1][left+1], nums[right]*mult+cache[total+1][left]);
+            }
+        }
+        
+        return cache[0][0];
+        
+    }
+}
