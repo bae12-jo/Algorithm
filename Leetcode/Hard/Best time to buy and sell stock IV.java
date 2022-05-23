@@ -14,7 +14,7 @@ class Solution {
                 without[i] = Math.max(without[i - 1], with[i - 1] + prices[i]);
             }
         }
-        return Math.max(with[n - 1], without[n - 1]);
+        return Math.max(with[n - 1], without[n - 1]); // 사실 without이 항상 더 클 수 밖에 없으므로 Math.max 대신 without[n-1] 이라고 해도 됨
     }
     
 }
