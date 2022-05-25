@@ -20,7 +20,7 @@ class Solution {
             minGap = Math.min(time[i+1]-time[i], minGap);
         }
         
-        return Math.min(minGap, time[0]+(1440-time[n-1]));
+        return Math.min(minGap, (time[0]+24*60)-time[n-1]);
         
     }
 }
